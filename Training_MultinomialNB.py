@@ -1,21 +1,20 @@
 import pandas as pd
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
+import PreProcessing
 
-# loading the csv file with latin-1 encoding so that it can read the non-ASCII characters
-df = pd.read_csv("/Users/somyasrivastava/Desktop/Projects/Spam_SMS_Detection/dataset/spam.csv" ,encoding='latin-1') 
-# printing the first few columns of the dataframe
-# print(df.head())
+dataset_path = "dataset/spam.csv"
 
-# dropping the unnamed columns (axis = 1) 
+# Reading the csv file into a dataframe using pandas
+# 'latin-1' encoding helps read the non-ASCII characters
+df = pd.read_csv(dataset_path, encoding='latin=1')
+
+# Dropping the unnamed columns (axis = 1 is to specify colums) 
 df = df.drop(["Unnamed: 2", "Unnamed: 3", "Unnamed: 4"], axis = 1)
-# renaming the columns 
-df = df.rename(columns = {"v1" : "Label", "v2" : "Text"})
-# adding another column for label encoding 
-df["Label_Enc"] = df["Label"].map({"ham":0, "spam":1})
-#print(df.head())
+# Renaming the columns 
+df = df.rename(columns = {"v1" : "label", "v2" : "text"})
+# Adding another column for label encoding 
+df["label_enc"] = df["label"].map({"ham":0, "spam":1})
 
-# making a plof of the number of spam and ham messages 
-sns.countplot(x=df['Label']) 
-plt.show()
+PreProcessing.MakeLowerCase(df)
+PreProcessing.RemovePunctuations(df)
+print(df.head())
+
