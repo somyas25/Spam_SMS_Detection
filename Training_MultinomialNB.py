@@ -1,6 +1,5 @@
 import pandas as pd
 import PreProcessing
-
 dataset_path = "dataset/spam.csv"
 
 # Reading the csv file into a dataframe using pandas
@@ -16,5 +15,6 @@ df["label_enc"] = df["label"].map({"ham":0, "spam":1})
 
 PreProcessing.MakeLowerCase(df)
 PreProcessing.RemovePunctuations(df)
+PreProcessing.RemoveStopWords(df)
 print(df.head())
 
